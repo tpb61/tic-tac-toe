@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    background: #fff;
+    margin: 0;
+}
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+header {
+    min-height: 150px;
+    font-size: 2em;
+    padding-left: 50px;
+    padding-top: 30px;
+    border-bottom: 1px solid #333;
+    background: #0A6069;
+    color: #fff;
+    
+}
+
+header p {
+    background: #0A6069;
+}
+.menu {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    background: #24B6C6;    
+}
+.menu ul {
+    background: #24B6C6;    
+    
+}
+.menu ul li{
+    list-style-type: none;
+    display: inline;
+    padding: 0 20px;
+    color: #fff;    
+    background: #24B6C6;        
+}
+.menu ul li a {
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #fff;    
+    background: #24B6C6;        
+}
+
+ul li a:hover {
+    color: #333;
+}
+.left-section {
+    width: 25%;
+    height: 200px;
+    font-size: 1.2em;
+    border: 1px solid black;
+    display: inline-block;
+}
+
+.main-section {
+    font-size: 1.2em;
+    border: 1px solid red;
+    width: 75%;
+    display: inline-block;
+    padding: 20px;
+}
+
+#tutorial {
+    border: 0.5px solid gray;
+}
+footer {
+    font-size: 1.2em;
+    border: 1px solid black;
+    height:100px;
+}   
+
+@media screen and ( max-width: 700px) {
+    .main-section {
+        background: #096069;
+        width: 50%;
+    }
+    .main-section span {
+        background: #096069;
+        width: 50%;
+    }
+    .main-section p {
+        background: #086069;
+        width: 50%;
+    }
+    .left-section {
+        background: #24B6C6;
+        width: 50%;
+    }
+    footer {
+        background: #24B6C6;
+        font-size: 1.5em;
+    }
+}
