@@ -8,6 +8,11 @@ canvas.addEventListener('click', function(env) {
   } 
 }, false);
 
+let winningStroke = '';
+const playerX = 'X';
+const playerO = 'O';
+let winner = 0;
+
 var gameOver = false;
 var gDraw = false;
 
@@ -32,21 +37,63 @@ function drawChar(env) {
   }
 
   if (gameWin()) {
-    // Remove click event
-    removeClickEvent();
-    console.log("Game win by: ");
+    drawWinningStroke();
+    var player = (winner === 1) ? playerX : playerO;
+    console.log("Game win by: " + player);
   } else if (gameDraw()) {
-    // remove click event
-    removeClickEvent();
     console.log("Game was a draw");
   }
 }
 
-function removeClickEvent() {
+function drawWinningStroke() {
 
+  var ctx = canvas.getContext('2d');
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#ff0000';
 
+  switch (winningStroke) {
+    case 'topH':
+      ctx.moveTo(0, 25);
+      ctx.lineTo(150, 25);
+      ctx.stroke();
+    break;
+    case 'midH' :
+      ctx.moveTo(0, 75);
+      ctx.lineTo(150, 75);
+      ctx.stroke();
+    break;
+    case 'btmH' :
+      ctx.moveTo(0, 125);
+      ctx.lineTo(150, 125);
+      ctx.stroke();
+    break;
+    case 'leftDia' :
+      ctx.moveTo(15, 15);
+      ctx.lineTo(135, 135);
+      ctx.stroke();
+    break;
+    case 'rightDia' :
+      ctx.moveTo(135, 15);
+      ctx.lineTo(15, 135);
+      ctx.stroke();
+    break;
+    case 'leftV' :
+      ctx.moveTo(25, 0);
+      ctx.lineTo(25, 150);
+      ctx.stroke();
+    break;
+    case 'middleV' :
+      ctx.moveTo(75, 0);
+      ctx.lineTo(75, 150);
+      ctx.stroke();
+    break;
+    case 'rightV' :
+      ctx.moveTo(125, 0);
+      ctx.lineTo(125, 150);
+      ctx.stroke();
+    break;
+  }
 }
-
 function gameDraw() {
 
   gDraw = true;
@@ -62,21 +109,30 @@ function gameWin() {
   gameOver = false;
 
   for (var i = 1; i <= 2; i++) {
+    winner = i;
     gameOver = sqClicked[0] == i && sqClicked[1] == i && sqClicked[2] == i;
+    winningStroke = 'topH';
     if (gameOver) return true;
     gameOver = sqClicked[3] == i && sqClicked[4] == i && sqClicked[5] == i;
+    winningStroke = 'midH';
     if (gameOver) return true;
     gameOver = sqClicked[6] == i && sqClicked[7] == i && sqClicked[8] == i;
+    winningStroke = 'btmH';
     if (gameOver) return true;
     gameOver = sqClicked[0] == i && sqClicked[4] == i && sqClicked[8] == i;
+    winningStroke = 'leftDia';
     if (gameOver) return true;
     gameOver = sqClicked[2] == i && sqClicked[4] == i && sqClicked[6] == i;
+    winningStroke = 'rightDia';
     if (gameOver) return true;
     gameOver = sqClicked[0] == i && sqClicked[3] == i && sqClicked[6] == i;
+    winningStroke = 'leftV';
     if (gameOver) return true;
     gameOver = sqClicked[1] == i && sqClicked[4] == i && sqClicked[7] == i;
+    winningStroke = 'middleV';
     if (gameOver) return true;
     gameOver = sqClicked[2] == i && sqClicked[5] == i && sqClicked[8] == i;
+    winningStroke = 'rightV';
     if (gameOver) return true;
   }
 
@@ -85,7 +141,6 @@ function gameWin() {
 
 function drawXorO() {
 
-  
   // arc(x, y, radius, startAngle, endAngle, anticlockwise)
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
@@ -212,7 +267,6 @@ function sqLocation(s) {
 
 }
 
-
 function drawBoard() {
     var canvas = document.getElementById('tutorial');
     if (canvas.getContext) {
@@ -243,64 +297,6 @@ function drawBoard() {
     }
   }
 
-
 // Initialise new Game
 newGame();
     
-  // function setUpBoardSquares() {
-
-  //   var square1 = {
-  //     x1: 0,
-  //     x2: 50,
-  //     y1: 0,
-  //     y2: 50
-  //   }
-  //   var square2 = {
-  //     x1: 50,
-  //     x2: 100,
-  //     y1: 0,
-  //     y2: 50
-  //   }
-  //   var square3 = {
-  //     x1: 100,
-  //     x2: 150,
-  //     y1: 0,
-  //     y2: 50
-  //   }
-  //   var square4 = {
-  //     x1: 0,
-  //     x2: 50,
-  //     y1: 50,
-  //     y2: 100
-  //   }
-  //   var square5 = {
-  //     x1: 50,
-  //     x2: 100,
-  //     y1: 50,
-  //     y2: 100
-  //   }
-  //   var square6 = {
-  //     x1: 100,
-  //     x2: 150,
-  //     y1: 50,
-  //     y2: 100
-  //   }
-  //   var square7 = {
-  //     x1: 0,
-  //     x2: 50,
-  //     y1: 100,
-  //     y2: 150
-  //   }
-  //   var square8 = {
-  //     x1: 50,
-  //     x2: 100,
-  //     y1: 100,
-  //     y2: 150
-  //   }
-  //   var square9 = {
-  //     x1: 100,
-  //     x2: 150,
-  //     y1: 100,
-  //     y2: 150
-  //   }
-  // }
