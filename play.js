@@ -1,21 +1,21 @@
 // Add click event to the canvas
 let canvas = document.getElementById('tutorial');
+  
 canvas.addEventListener('click', function(env) {
-  if (gameOver || gDraw) {
-    canvas.removeEventListener('click', arguments.callee, false);
-  } else {
-    drawChar(env);
-  } 
-}, false);
-
+  drawChar(env);
+} , false);
+    
+let ctx = canvas.getContext('2d');
+let title = document.getElementsByClassName('title')[0];
+let btn = document.getElementsByClassName('btn')[0];
+btn.addEventListener('click', newGame, false);
+// Initialise variables
 let winningStroke = '';
 const playerX = 'X';
 const playerO = 'O';
 let winner = 0;
-
 var gameOver = false;
 var gDraw = false;
-
 let sqClicked = [0,0,0,0,0,0,0,0,0];
 // the center position of the box clicked
 let pos = {
@@ -27,30 +27,33 @@ let sqBlank = true;
 
 // Board Click Event runs drawChar
 function drawChar(env) {
+  
+  if (gameOver || gDraw) return;
 
   var mousePos = getMousePos(env);
   sqBlank = sqLocation(mousePos);
   if (sqBlank) {
     drawXorO(pos);
   } else {
-    console.log("Square taken, try again");
+    title.innerHTML = "Square taken";
   }
-
+  // Check for a game win or draw
   if (gameWin()) {
     drawWinningStroke();
     var player = (winner === 1) ? playerX : playerO;
-    console.log("Game win by: " + player);
+    title.innerHTML = "Winner: " + player;
+    btn.style.display = 'block';    
   } else if (gameDraw()) {
-    console.log("Game was a draw");
+    title.innerHTML = "Game Draw";
+    btn.style.display = 'block';
   }
 }
 
 function drawWinningStroke() {
 
-  var ctx = canvas.getContext('2d');
-  ctx.lineWidth = 1;
+  // ctx.lineWidth = 1;
   ctx.strokeStyle = '#ff0000';
-
+  ctx.beginPath();
   switch (winningStroke) {
     case 'topH':
       ctx.moveTo(0, 25);
@@ -106,7 +109,7 @@ function gameDraw() {
 
 function gameWin() {
   // Check for winner
-  gameOver = false;
+  // gameOver = false;
 
   for (var i = 1; i <= 2; i++) {
     winner = i;
@@ -142,11 +145,9 @@ function gameWin() {
 function drawXorO() {
 
   // arc(x, y, radius, startAngle, endAngle, anticlockwise)
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
+
     ctx.lineWidth = 3;
-    isX = !isX;
-    if (isX) {
+    if (!isX) {
       ctx.beginPath();
       ctx.arc(pos.x, pos.y, 12, 0, Math.PI * 2, true); // Outer circle
       ctx.stroke();
@@ -157,9 +158,11 @@ function drawXorO() {
       ctx.lineTo(pos.x + 10, pos.y + 10);
       ctx.moveTo(pos.x +10, pos.y -10);
       ctx.lineTo(pos.x -10, pos.y +10);
+      ctx.closePath();
       ctx.stroke();
     }
-  }
+    // switch to next player
+    isX = !isX;
 }
 
 // Return the x/y coordinates of the mouse click
@@ -268,11 +271,11 @@ function sqLocation(s) {
 }
 
 function drawBoard() {
-    var canvas = document.getElementById('tutorial');
-    if (canvas.getContext) {
-      var ctx = canvas.getContext('2d');
-    }
+  
+    ctx.strokeStyle = '#000';    
+    ctx.lineWidth=0.5;
     ctx.clearRect(0,0,150,150);
+    ctx.beginPath();
     ctx.moveTo(0,50);
     ctx.lineTo(150,50);
     ctx.moveTo(0, 100);
@@ -281,13 +284,21 @@ function drawBoard() {
     ctx.lineTo(50, 150);
     ctx.moveTo(100, 0);
     ctx.lineTo(100, 150);
-    ctx.lineWidth=0.5;
+    ctx.closePath();
     ctx.stroke();  
   }
   
   function newGame() {
-    drawBoard();
+    gameOver = false;
+    gDraw = false;
+    winningStroke = '';
+    winner = 0;
+    isX = true;
+    sqBlank = true;
+    title.innerHTML = 'Have a go...';
+    btn.style.display = 'none';
     initClickedSquares();
+    drawBoard();
   }
 
   function initClickedSquares() {
