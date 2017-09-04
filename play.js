@@ -1,11 +1,11 @@
 // Add click event to the canvas
-let canvas = document.getElementById('tutorial');
+let myCanvas = document.getElementById('tutorial');
   
-canvas.addEventListener('click', function(env) {
+myCanvas.addEventListener('click', function(env) {
   drawChar(env);
 } , false);
     
-let ctx = canvas.getContext('2d');
+let ctx = myCanvas.getContext('2d');
 let title = document.getElementsByClassName('title')[0];
 let btn = document.getElementsByClassName('btn')[0];
 btn.addEventListener('click', newGame, false);
@@ -167,7 +167,7 @@ function drawXorO() {
 
 // Return the x/y coordinates of the mouse click
 function getMousePos(env) {
-  var rect = canvas.getBoundingClientRect();
+  var rect = myCanvas.getBoundingClientRect();
   return {
     x: env.clientX - rect.left,
     y: env.clientY - rect.top
