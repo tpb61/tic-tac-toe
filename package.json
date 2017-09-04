@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "description": "Game",
   "main": "play.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tpb61/tic-tac-toe.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Paul Brown",
   "license": "MIT",
   "devDependencies": {
-
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "dependencies": {
+    "eslint": "^4.6.1"
   }
 }
